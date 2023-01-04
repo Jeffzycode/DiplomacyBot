@@ -4,5 +4,5 @@
 .env*
 env
 node_modules/
-./commands/experimental/
-./commands/debugging/
+commands/experimental/
+commands/debugging/
