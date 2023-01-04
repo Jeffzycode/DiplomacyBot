@@ -20,9 +20,6 @@ async function createServerProfile(serverID){//Returns
     }
     //Provision Basic Info:
     params.Item["id"] = serverID;
-    params.Item["diploChannelCount"] = 0;
-    params.Item["treatyCount"] = 0;
-    params.Item["countryRoleCount"] = 0;
     params.Item["diploChannels"] = {};//Empty Table
     params.Item["treaties"] = {};//Empty Table
     params.Item["countryRoles"] = {};//Empty Table
