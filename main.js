@@ -70,10 +70,10 @@ client.once('ready', () => {
     console.log("prefix is " + prefix);
 });
 
-//Test
+/*
 client.on('interactionCreate', interaction =>{
     console.log('Got an interaction');
-});
+});*/
 
 client.on('guildCreate', async guild => {
     try {//Push to event queue
@@ -164,12 +164,12 @@ client.on("messageCreate", async message => {
                 eventQueue.shift();
             } 
         } else {
-            message.channel.send('Command does not exist :(');
+            message.channel.send('Command does not exist.');
         }
     } catch(error) {
         try {
             message.channel.send("Critical Error, contact Developers immediately.");
-        } catch (__error){
+        } catch {
 
         }
         console.log("Critial error, " + error);
