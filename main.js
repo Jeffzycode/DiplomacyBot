@@ -48,6 +48,7 @@ client.events = new Collection();
 client.DMCommands = new Collection();
 const commandFiles = fs.readdirSync('./commands/'), eventFiles = fs.readdirSync('./events/').filter(file => file.endsWith('.js')), DMCommandFiles = fs.readdirSync('./DMCommands/').filter(file => file.endsWith('.js'));
 for(const file of commandFiles) {
+    if(file === '.gitignore') continue;//Skip the gitignore file
     if(file === 'experimental') continue;//Do not allow experimental commands
     const subFiles = fs.readdirSync(`./commands/${file}/`).filter(file => file.endsWith('.js'));
     for(const subFile of subFiles) {
