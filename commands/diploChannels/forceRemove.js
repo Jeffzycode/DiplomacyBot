@@ -28,7 +28,7 @@ module.exports = {
             channelID = args[1].substring(2, args[1].length-1);
             assert((await message.guild.channels.fetch(channelID)) !== null);
         } catch (error){
-            message.channel.send("Invalid format. Use ~force-remove @ROLE #CHANNEL");
+            await message.channel.send("Invalid format. Use " + process.env.PFIX + "force-remove @ROLE #CHANNEL");
             return;
         }
         //Fetch
@@ -52,7 +52,7 @@ module.exports = {
             await targetChannel.permissionOverwrites.delete(await message.guild.roles.fetch(roleID));
         } catch (error){
             console.log(error);
-            message.channel.send("Failed to update channel permissions, contact a developer.");
+            await message.channel.send("Failed to update channel permissions, contact a developer.");
             return;
         }
         //Then remove the role from being a member of the diplo channel in the diploChannels DB
@@ -71,7 +71,7 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Removed role from diplo channel.");
+        await message.channel.send("Removed role from diplo channel.");
         
     }
 }

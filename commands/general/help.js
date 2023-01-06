@@ -18,11 +18,13 @@ module.exports = {
         //Perms checker
         if(! (await permVerifier.checkPermissions(message.author, this.requiredPerms, false, message))) return;
         //Make help message
-        let helpMessage = "Hi, I'm " + process.env.BOT_NAME + ", or DiplomacyBot!\n";
-        helpMessage += "The bot's wiki: <https://github.com/Jeffzycode/DiplomacyBot/wiki>\n"
-        helpMessage += "A list of the bot's commands: <https://github.com/Jeffzycode/DiplomacyBot/wiki/Commands>\n"
+        let helpMessage = "Hi, I'm " + process.env.BOT_NAME + "!\n";
+        helpMessage += "The bot's prefix is `" + process.env.PFIX + "`\n";
+        helpMessage += "The bot's wiki: <https://github.com/Jeffzycode/DiplomacyBot/wiki>\n";
+        helpMessage += "A list of the bot's commands: <https://github.com/Jeffzycode/DiplomacyBot/wiki/Commands>\n";
+        helpMessage += "In case you are interested in self-hosting: <https://github.com/GAwesomeBot/bot/wiki/Self-Hosting>\n";
         helpMessage += "Brief instructions on how to set up the bot in your server: <https://github.com/Jeffzycode/DiplomacyBot/wiki/Setting-Up>\n";
-        helpMessage += "\n\nAn invite to the bot's help discord: https://discord.gg/qVbsm9Xy7r"
+        helpMessage += "\n\nAn invite to the bot's help discord: https://discord.gg/qVbsm9Xy7r";
         
         await message.channel.send(helpMessage);
     }

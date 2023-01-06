@@ -24,7 +24,7 @@ module.exports = {
             fetchedChannel = await message.guild.channels.fetch(args[0].substring(2, args[0].length-1));
             assert(fetchedChannel !== null);
         } catch (error) {
-            await message.channel.send("Invalid command. Use ~role-info @ROLE");
+            await message.channel.send("Invalid command. Use " + process.env.PFIX + "role-info @ROLE");
         }
         try {//Fetch role profile
             channelProfile = await docClient.get({TableName: 'diploChannels', Key: {id: fetchedChannel.id}}).promise();

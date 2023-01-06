@@ -28,7 +28,7 @@ module.exports = {
             channelID = args[1].substring(2, args[1].length-1);
             assert((await message.guild.channels.fetch(channelID)) !== null);
         } catch (error){
-            message.channel.send("Invalid format. Use ~force-add @ROLE #CHANNEL");
+            await message.channel.send("Invalid format. Use " + process.env.PFIX + "force-add @ROLE #CHANNEL");
             return;
         }
         //Fetch

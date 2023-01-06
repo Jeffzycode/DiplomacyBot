@@ -28,7 +28,7 @@ module.exports = {
                 clauseToDelete = parsedNum;
             }
         } catch (error) {
-            message.channel.send("Invalid command format. Use ~delete-clause <CLAUSE-NUMBER_(OPTIONAL)>");
+            await message.channel.send("Invalid command. Use " + process.env.PFIX + "delete-clause <CLAUSE-NUMBER_(OPTIONAL)>");
             return;
         }
         //Step 2. Pull the channel entry from the database
@@ -39,21 +39,21 @@ module.exports = {
             await CE.databaseFetchError(error, message.channel);
         }
         if(channelProfile.Item === undefined) {//Not a diplo channel
-            message.channel.send("You cannot delete a clause from a treaty in a non-diplo channel.");
+            await message.channel.send("You cannot delete a clause from a treaty in a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is no treaty in the channel
-            message.channel.send("You cannot delete a clause from a non-existent treaty. To make a new treaty, use ~make-treaty.");
+            await message.channel.send("You cannot delete a clause from a non-existent treaty. To make a new treaty, use " + process.env.PFIX + "make-treaty.");
             return;
         }
         if(channelProfile.Item.curTreaty.clauses.length === 0){//There are no clauses to delete
-            message.channel.send("There is no clause to delete. Use ~add-clause to add a new clause.");
+            await message.channel.send("There is no clause to delete. Use " + process.env.PFIX + "add-clause to add a new clause.");
             return;
         }
         if(clauseToDelete === 0) clauseToDelete = channelProfile.Item.curTreaty.clauses.length; //No clause provided = delete lastClause
         //Step 3. Check that the clause exists
         if(channelProfile.Item.curTreaty.clauses.length < clauseToDelete) {//There is no treaty in the channel
-            message.channel.send("You cannot delete a non-existent clause.");
+            await message.channel.send("You cannot delete a non-existent clause.");
             return;
         }
         //Step 4. Delete the clause
@@ -64,6 +64,6 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Clause successfully deleted.");
+        await message.channel.send("Clause successfully deleted.");
     }
 }

@@ -26,7 +26,7 @@ module.exports = {
             roleID = args[0].substring(3, args[0].length-1);
             assert((await message.guild.roles.fetch(roleID)) !== null);//Check that the argument is indeed a role
         } catch (error) {
-            message.channel.send("Invalid command. Use ~add-signatory @ROLE");
+            await message.channel.send("Invalid command. Use " + process.env.PFIX + "add-signatory @ROLE");
             return;
         }
         try {//Fetch channel profile
@@ -35,22 +35,22 @@ module.exports = {
             await CE.databaseFetchError(error, message.channel);
         }
         if(channelProfile.Item === undefined) {//Not a diplo channel
-            message.channel.send("You cannot add a signatory in a non-diplo channel.");
+            await message.channel.send("You cannot add a signatory in a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is no treaty in the channel
-            message.channel.send("You cannot add a signatory to a non-existent treaty. To make a new treaty, use ~make-treaty.");
+            await message.channel.send("You cannot add a signatory to a non-existent treaty. To make a new treaty, use " + process.env.PFIX + "make-treaty.");
             return;
         }
         if(! channelProfile.Item.members.hasOwnProperty(roleID)) {//Attempt to add a non-member
-            message.channel.send("You cannot add a non-member of the diplo channel as a signatory. To add them to the diplo channel, use ~force-add.");
+            await message.channel.send("You cannot add a non-member of the diplo channel as a signatory. To add them to the diplo channel, use " + process.env.PFIX + "force-add.");
             return;
         }
         //Add signatory
         channelProfile.Item.curTreaty.signatories[roleID] = true;
         //Check that the number of signatories is below the upper limit
         if(Objects.keys(channelProfile.Item.curTreaty.signatories).length > process.env.MAX_SIGNATORIES) {
-            message.channel.send("There can be at most " + process.env.MAX_SIGNATORIES + " signatories of one treaty.");
+            await message.channel.send("There can be at most " + process.env.MAX_SIGNATORIES + " signatories of one treaty.");
             return;
         }
         try {//Attempt to push to database
@@ -58,7 +58,7 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Signatory added successfully");
+        await message.channel.send("Signatory added successfully");
         
     }
 }

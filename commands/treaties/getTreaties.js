@@ -76,7 +76,7 @@ async function getSpecificTreaties(outputChannel, guild, args){
             countryIDs[fetchedRole.id] = true;//Insert
         }
     } catch (error) {
-        await outputChannel.send("Invalid command. Use ~get-treaties @ROLE1 @ROLE2 ...");
+        await outputChannel.send("Invalid command. Use " + process.env.PFIX + "get-treaties @ROLE1 @ROLE2 ...");
         return;
     }
     try {//Try to fetch

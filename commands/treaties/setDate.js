@@ -25,7 +25,7 @@ module.exports = {
             let parsedDate = new Date(args[0]);
             newDate = parsedDate.toISOString().split('T')[0];
         } catch (error) {
-            message.channel.send("Invalid command. Use ~set-date YYYY-MM-DD");
+            await message.channel.send("Invalid command. Use " + process.env.PFIX + "set-date YYYY-MM-DD");
             return;
         }
         //Step 2. Fetch channel profile
@@ -37,11 +37,11 @@ module.exports = {
         }
         //Step 3. Check that a treaty exists
         if(channelProfile.Item === undefined) {//Not a diplo channel
-            message.channel.send("You cannot set the treaty date in a non-diplo channel.");
+            await message.channel.send("You cannot set the treaty date in a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is no treaty in the channel
-            message.channel.send("You cannot set the date of a non-existent treaty. To make a new treaty, use ~make-treaty.");
+            await message.channel.send("You cannot set the date of a non-existent treaty. To make a new treaty, use " + process.env.PFIX + "make-treaty.");
             return;
         }
         //Step 4. Apply modification
@@ -52,6 +52,6 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Successfully set treaty date as " + newDate);
+        await message.channel.send("Successfully set treaty date as " + newDate);
     }
 }

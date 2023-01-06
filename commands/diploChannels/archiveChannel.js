@@ -68,7 +68,7 @@ module.exports = {
             channelID = args[0].substring(2, args[0].length-1);
             assert((await message.guild.channels.fetch(channelID)) !== null);
         } catch (error) {
-            await message.channel.send("Invalid command. Use ~archive-channel #CHANNEL");
+            await message.channel.send("Invalid command. Use "+ process.env.PFIX + "archive-channel #CHANNEL");
             return;
         }
         //Step 2. Check that the channel is a diplo channel

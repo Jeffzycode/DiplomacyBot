@@ -19,7 +19,7 @@ module.exports = {
                 channelsToDelete[fetchedChannel.id] = true;
             }
         } catch (error) {
-            message.channel.send("Invalid command format. Use ~delete-channels #CHANNEL1 #CHANNEL2 ...");
+            await message.channel.send("Invalid command format. Use " + process.env.PFIX + "delete-channels #CHANNEL1 #CHANNEL2 ...");
             console.log(error);            
             return;
         }
@@ -38,7 +38,7 @@ module.exports = {
             }
             
         } catch (error) {
-            message.channel.send("Error when deleting channels, contact a developer.");
+            await message.channel.send("Error when deleting channels, contact a developer.");
             console.log(error);
             return;
         }

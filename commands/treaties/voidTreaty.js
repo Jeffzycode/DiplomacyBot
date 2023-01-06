@@ -36,7 +36,7 @@ module.exports = {
         if(! (await permVerifier.checkPermissions(message.author, this.requiredPerms, false, message))) return;
         //Step 1. Validate input and provided ID
         if(args.length !== 1){//Must accept one argument
-            message.channel.send("Invalid command. Use ~void-treaty <ID>");
+            message.channel.send("Invalid command. Use " + process.env.PFIX + "void-treaty <ID>");
             return;
         }
         //Step 2. Fetch Treaty

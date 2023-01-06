@@ -24,7 +24,7 @@ module.exports = {
             fetchedRole = await message.guild.roles.fetch(args[0].substring(3, args[0].length-1));
             assert(fetchedRole !== null);
         } catch (error) {
-            await message.channel.send("Invalid command. Use ~role-info @ROLE");
+            await message.channel.send("Invalid command. Use " + process.env.PFIX + "role-info @ROLE");
             return;
         }
         try {//Fetch role profile

@@ -19,7 +19,7 @@ module.exports = {
         //Perms checker (useless ATM)
         if(! (await permVerifier.checkPermissions(message.author, this.requiredPerms, false, message))) return;
         if(args.length === 0) {//Must have at least one argument 
-            message.channel.send("You cannot set an empty title.");
+            await message.channel.send("You cannot set an empty title.");
             return;
         }
         let setTitle = '';
@@ -29,7 +29,7 @@ module.exports = {
         }
         //Check title length
         if(setTitle.length > process.env.MAX_TREATY_TITLE_LENGTH) {
-            message.channel.send("The title of a treaty is limited to " + process.env.MAX_TREATY_TITLE_LENGTH + " characters.");
+            await message.channel.send("The title of a treaty is limited to " + process.env.MAX_TREATY_TITLE_LENGTH + " characters.");
             return;
         }
         let channelProfile;
@@ -40,11 +40,11 @@ module.exports = {
             return;
         }
         if(channelProfile.Item === undefined) {//Not a diplo channel
-            message.channel.send("You cannot set a treaty title in a non-diplo channel.");
+            await message.channel.send("You cannot set a treaty title in a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is no treaty in the channel
-            message.channel.send("You cannot set the title of a non-existent treaty. To make a new treaty, use ~make-treaty.");
+            await message.channel.send("You cannot set the title of a non-existent treaty. To make a new treaty, use " + process.env.PFIX + "make-treaty.");
             return;
         }
         channelProfile.Item.curTreaty.title = setTitle;//Add the title
@@ -53,6 +53,6 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Successfully set treaty title");
+        await message.channel.send("Successfully set treaty title");
     }
 }

@@ -23,7 +23,7 @@ module.exports = {
             assert((await message.guild.channels.fetch(args[0].substring(2, args[0].length-1))) !== null);//Channel exists
             assert((await message.guild.channels.fetch(args[0].substring(2, args[0].length-1))).type === 0);//Must be a text channel
         } catch (error) {
-            message.channel.send("Invalid format. Use ~set-log #CHANNELNAME");
+            await message.channel.send("Invalid format. Use " + process.env.PFIX + "set-log #CHANNELNAME");
             return;
         }
         let newLogChannel = args[0].substring(2, args[0].length-1);
@@ -31,7 +31,7 @@ module.exports = {
             let guildChannel = message.channel;
             await updateDB.updateTable('servers', guildChannel.guildId, 'logChannel', newLogChannel);
             console.log("Successfully changed log channel of server " + guildChannel.guild.name);
-            message.guild.channels.fetch(newLogChannel).then(channel => channel.send("Verify that this is the correct log channel."));
+            await message.guild.channels.fetch(newLogChannel).then(async channel => await channel.send("Verify that this is the correct log channel."));
         } catch (error) {
             console.log("Error when changing the log channel, " + error);
             return;

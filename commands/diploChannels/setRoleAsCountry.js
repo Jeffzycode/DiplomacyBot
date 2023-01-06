@@ -28,7 +28,7 @@ module.exports = {
                 rolesToSet.push(curRole.id);
             }
         } catch (error) {
-            message.channel.send("Invalid format. Use ~set-country-role @Role1 @Role2 ...");
+            await message.channel.send("Invalid format. Use " + process.env.PFIX + "set-country-role @Role1 @Role2 ...");
             return;
         }
         try {//Try to insert the new role into the server profile
@@ -53,6 +53,6 @@ module.exports = {
             console.log("Error when changing adding a role as a country, " + error);
             return;
         }
-        message.channel.send("Succesfully updated country roles.");
+        await message.channel.send("Succesfully updated country roles.");
     }
 }

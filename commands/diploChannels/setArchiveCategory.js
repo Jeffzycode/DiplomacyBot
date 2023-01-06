@@ -31,7 +31,7 @@ module.exports = {
                 newCategory = (await message.guild.channels.fetch(args[0].substring(2, args[0].length-1))).parentId;
             }
         } catch (error) {
-            message.channel.send("Invalid command format. Use ~set-archive-category <CATEGORY_ID> or\n~set-archive-category #CHANNEL_IN_TARGET_CATEGORY");
+            await message.channel.send("Invalid command format. Use " + process.env.PFIX + "set-archive-category <CATEGORY_ID> or\n" + process.env.PFIX + "set-archive-category #CHANNEL_IN_TARGET_CATEGORY");
             return;
         }
         //Add archiveCategory to database
@@ -40,6 +40,6 @@ module.exports = {
         } catch (error){
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Updated archive category.");
+        await message.channel.send("Updated archive category.");
     }
 }

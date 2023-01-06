@@ -36,11 +36,11 @@ async function postTreatyFromChannel(message){
         return;
     }
     if(channelProfile.Item === undefined) {//Not a diplo channel
-        message.channel.send("You cannot view the treaty of a non-diplo channel."), CE = require(`../../QOL/commonErrors.js`);
+        await message.channel.send("You cannot view the treaty of a non-diplo channel."), CE = require(`../../QOL/commonErrors.js`);
         return;
     }
     if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is no treaty in the channel
-        message.channel.send("You view a non-existent treaty. To make a new treaty, use ~make-treaty.");
+        await message.channel.send("You view a non-existent treaty. To make a new treaty, use " + process.env.PFIX + "make-treaty.");
         return;
     }
     //Refresh signatories
@@ -56,13 +56,13 @@ async function postTreatyFromChannel(message){
     else outputStrings.push("> *No date provided.*\n> ** **\n");
     //CLAUSES
     if(channelProfile.Item.curTreaty.clauses.length === 0){
-        outputStrings.push("> *There are currently no clauses. Use ~add-clause to add a clause.*\n> ** **\n")
+        outputStrings.push("> *There are currently no clauses. Use " + process.env.PFIX + "add-clause to add a clause.*\n> ** **\n")
     } else {
         for(i = 0; i < channelProfile.Item.curTreaty.clauses.length; i++) outputStrings.push(" > __Article " + String(i+1) + ".__ " + channelProfile.Item.curTreaty.clauses[i] + "\n> ** **\n");
     }
     //SIGNATORIES
     if(Object.keys(channelProfile.Item.curTreaty.signatories).length === 0){//Send signatories
-        outputStrings.push("> *Nobody has signed the treaty yet. Use ~sign-treaty to sign the treaty.*");
+        outputStrings.push("> *Nobody has signed the treaty yet. Use " + process.env.PFIX + "sign-treaty to sign the treaty.*");
     } else {
         let signatoryMessage = "> *Signed:* ";
         for(signatory in channelProfile.Item.curTreaty.signatories) signatoryMessage += ('<@&' + signatory + '>');
@@ -85,12 +85,12 @@ async function postTreatyFromChannel(message){
 
     await message.channel.send("**" + treatyTitle + "**\n*" + treatyDate + "*");
     if(treatyClauses.length === 0){//Post clauses
-        await message.channel.send("*There are currently no clauses. Use ~add-clause to add a clause.*");
+        await message.channel.send("*There are currently no clauses. Use " + process.env.PFIX + "add-clause to add a clause.*");
     } else {
         for(i = 0; i < treatyClauses.length; i++) await message.channel.send(" > __Article " + String(i+1) + ".__ " + treatyClauses[i]);
     }
     if(treatySignatories.length === 0){//Send signatories
-        await message.channel.send("*Nobody has signed the treaty yet. Use ~sign-treaty to sign the treaty.*");
+        await message.channel.send("*Nobody has signed the treaty yet. Use " + process.env.PFIX + "sign-treaty to sign the treaty.*");
     } else {
         let signatoryMessage = "Signed: ";
         for(i = 0; i < treatySignatories.length; i++) signatoryMessage += ('<@&' + treatySignatories[i] + '>');
@@ -148,7 +148,7 @@ module.exports = {
                 await CE.databaseFetchError(error, message.channel);
             }
             if(treatyProfile.Item === undefined) {//Treaty not found
-                message.channel.send("Treaty not found.");
+                await message.channel.send("Treaty not found.");
                 return;
             }
             await postSpecificTreaty(treatyProfile.Item, message.channel);

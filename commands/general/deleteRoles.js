@@ -19,7 +19,7 @@ module.exports = {
                 rolesToDelete[fetchedRole.id] = true;
             }
         } catch (error) {
-            message.channel.send("Invalid command format. Use ~delete-roles @ROLE1 @ROLE2 ...");
+            await message.channel.send("Invalid command format. Use " + process.env.PFIX + "delete-roles @ROLE1 @ROLE2 ...");
             console.log(error);            
             return;
         }
@@ -30,9 +30,9 @@ module.exports = {
                 await message.guild.roles.delete(role, 'Bulk Delete');
                 deleteCnt++;
             }
-            message.channel.send("Deleted " + deleteCnt + " role(s).");
+            await message.channel.send("Deleted " + deleteCnt + " role(s).");
         } catch (error) {
-            message.channel.send("Error when deleting roles, contact a developer.");
+            await message.channel.send("Error when deleting roles, contact a developer.");
             console.log(error);
             return;
         }

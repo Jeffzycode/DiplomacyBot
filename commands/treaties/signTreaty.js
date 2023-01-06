@@ -26,11 +26,11 @@ module.exports = {
             return;
         }
         if(channelProfile.Item === undefined) {//Not a diplo channel
-            message.channel.send("You cannot sign a treaty in a non-diplo channel.");
+            await message.channel.send("You cannot sign a treaty in a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is no treaty in the channel
-            message.channel.send("You cannot sign a non-existent treaty. To make a new treaty, use ~make-treaty.");
+            await message.channel.send("You cannot sign a non-existent treaty. To make a new treaty, use " + process.env.PFIX + "make-treaty.");
             return;
         }
         rolesCache = message.member.roles.cache;
@@ -40,14 +40,14 @@ module.exports = {
             if(channelProfile.Item.members.hasOwnProperty(roleID) && ! channelProfile.Item.curTreaty.signatories.hasOwnProperty(roleID)) rolesToSign.push(roleID);
         }
         if(rolesToSign.length === 0){//Don't waste resources pushing 
-            message.channel.send("You've already signed the treaty.");
+            await message.channel.send("You've already signed the treaty.");
             return;
         }
         //Insert signatories
         for(i = 0; i < rolesToSign.length; i++) channelProfile.Item.curTreaty.signatories[rolesToSign[i]] = true;
         //Check if the number of signatories is below the limit
         if(Object.keys(channelProfile.Item.curTreaty.signatories).length > process.env.MAX_SIGNATORIES) {
-            message.channel.send("A treaty can have a maximum of " + process.env.MAX_SIGNATORIES + " signatories.");
+            await message.channel.send("A treaty can have a maximum of " + process.env.MAX_SIGNATORIES + " signatories.");
             return;
         }
         try {//Attempt to push to database
@@ -55,7 +55,7 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Treaty signed successfully.");
+        await message.channel.send("Treaty signed successfully.");
         
     }
 }

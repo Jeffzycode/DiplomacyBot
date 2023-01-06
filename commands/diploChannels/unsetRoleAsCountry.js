@@ -36,7 +36,7 @@ module.exports = {
                 rolesToUnset[args[i].substring(3, args[i].length-1)] = true;
             }
         } catch (error) {
-            message.channel.send("Invalid Format. Use ~unset-country-roles @ROLE1 @ROLE2 ...");
+            await message.channel.send("Invalid Format. Use " + process.env.PFIX + "unset-country-roles @ROLE1 @ROLE2 ...");
             return;
         }
         let serverProfile;
@@ -48,7 +48,7 @@ module.exports = {
         try {//Other Validator (checking if each role is a country)
             for(roleID in rolesToUnset) assert(serverProfile.Item.countryRoles.hasOwnProperty(roleID));
         } catch (error){
-            message.channel.send("Error: each role must be a country role.");
+            await message.channel.send("Error: each role must be a country role.");
             return;
         }
         let curCountryRoles = serverProfile.Item.countryRoles;
@@ -69,7 +69,7 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }  
-        message.channel.send("Un-set country roles successfully.");
+        await message.channel.send("Un-set country roles successfully.");
 
     }
 }

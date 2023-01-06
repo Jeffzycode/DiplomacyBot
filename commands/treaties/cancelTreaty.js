@@ -26,11 +26,11 @@ module.exports = {
             await CE.databaseFetchError(error, message.channel);
         }
         if(channelProfile.Item === undefined){//Command was sent in a non-diplo channel
-            message.channel.send("You cannot delete a treaty in a non-diplo channel.");
+            await message.channel.send("You cannot delete a treaty in a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is already a treaty in the channel
-            message.channel.send("There is no treaty in this channel. To create one, use ~make-treaty.");
+            await message.channel.send("There is no treaty in this channel. To create one, use " + process.env.PFIX + "make-treaty.");
             return;
         }
         channelProfile.Item.curTreaty = {};
@@ -39,6 +39,6 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Treaty successfully scrapped.");
+        await message.channel.send("Treaty successfully scrapped.");
     }
 }

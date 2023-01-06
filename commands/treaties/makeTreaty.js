@@ -25,11 +25,11 @@ module.exports = {
             await CE.databaseFetchError(error, message.channel);
         }
         if(channelProfile.Item === undefined) {//Not a diplo channel
-            message.channel.send("You cannot make a treaty in a non-diplo channel.");
+            await message.channel.send("You cannot make a treaty in a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length !== 0) {//There is already a treaty in the channel
-            message.channel.send("A treaty exists in this channel. To delete it, use ~cancel-treaty.");
+            await message.channel.send("A treaty exists in this channel. To delete it, use " + process.env.PFIX + "cancel-treaty.");
             return;
         }
         //Make the treaty
@@ -41,7 +41,7 @@ module.exports = {
         }
         //Check title length
         if(treatyTitle.length > process.env.MAX_TREATY_TITLE_LENGTH) {
-            message.channel.send("The treaty's title can be at most " + process.env.MAX_TREATY_TITLE_LENGTH + " characters.");
+            await message.channel.send("The treaty's title can be at most " + process.env.MAX_TREATY_TITLE_LENGTH + " characters.");
             return;
         }
         //Make the treaty object
@@ -56,6 +56,6 @@ module.exports = {
         } catch (error) {  
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Treaty succesfully created");
+        await message.channel.send("Treaty succesfully created");
     }
 }

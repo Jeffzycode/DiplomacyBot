@@ -23,7 +23,7 @@ module.exports = {
             assert((await message.guild.channels.fetch(args[0].substring(2, args[0].length-1))) !== null);//Channel must exist
             assert((await message.guild.channels.fetch(args[0].substring(2, args[0].length-1))).type === 0);//Must be a text channel
         } catch (error) {
-            message.channel.send("Invalid format. Use ~set-treaty-channel #CHANNELNAME");
+            await message.channel.send("Invalid format. Use " + process.env.PFIX + "set-treaty-channel #CHANNELNAME");
             console.log(error);
             return;
         }

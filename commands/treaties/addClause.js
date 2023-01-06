@@ -24,12 +24,12 @@ module.exports = {
             addedClause += args[i];
         }
         if(addedClause.length === 0){//Clause cannot be empty
-            message.channel.send("You cannot add an empty clause");
+            await message.channel.send("You cannot add an empty clause");
             return;
         }
         //Check if the clause length is below the limit
         if(addedClause.length > process.env.MAX_CLAUSE_LENGTH) {
-            message.channel.send("A clause can have a maximum of " + process.env.MAX_CLAUSE_LENGTH + " characters.");
+            await message.channel.send("A clause can have a maximum of " + process.env.MAX_CLAUSE_LENGTH + " characters.");
             return;
         }
         let channelProfile;
@@ -39,17 +39,17 @@ module.exports = {
             await CE.databaseFetchError(error, message.channel);
         }
         if(channelProfile.Item === undefined) {//Not a diplo channel
-            message.channel.send("You cannot add a clause to a treaty in a non-diplo channel.");
+            await message.channel.send("You cannot add a clause to a treaty in a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is no treaty in the channel
-            message.channel.send("You cannot add a clause to a non-existent treaty. To make a new treaty, use ~make-treaty.");
+            await message.channel.send("You cannot add a clause to a non-existent treaty. To make a new treaty, use " + process.env.PFIX + "make-treaty.");
             return;
         }
         channelProfile.Item.curTreaty.clauses.push(addedClause);//Add the clause
         //Check that there aren't too many clauses
         if(channelProfile.Item.curTreaty.clauses.length > process.env.MAX_CLAUSES) {
-            message.channel.send("There can be at most " + process.env.MAX_CLAUSES + " clauses in a given treaty.");
+            await message.channel.send("There can be at most " + process.env.MAX_CLAUSES + " clauses in a given treaty.");
             return;
         }
         try {//Attempt to push to database
@@ -57,6 +57,6 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Successfully added clause");
+        await message.channel.send("Successfully added clause");
     }
 }

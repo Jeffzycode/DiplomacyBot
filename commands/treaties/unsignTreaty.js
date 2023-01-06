@@ -26,11 +26,11 @@ module.exports = {
             return;
         }
         if(channelProfile.Item === undefined) {//Not a diplo channel
-            message.channel.send("You cannot unsign a treaty in a non-diplo channel.");
+            await message.channel.send("You cannot unsign a treaty in a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is no treaty in the channel
-            message.channel.send("You cannot unsign a non-existent treaty. To make a new treaty, use ~make-treaty.");
+            await message.channel.send("You cannot unsign a non-existent treaty. To make a new treaty, use " + process.env.PFIX + "make-treaty.");
             return;
         }
         rolesCache = message.member.roles.cache;
@@ -40,7 +40,7 @@ module.exports = {
             if(channelProfile.Item.members.hasOwnProperty(roleID) && channelProfile.Item.curTreaty.signatories.hasOwnProperty(roleID)) rolesToRemove.push(roleID);
         }
         if(rolesToRemove.length === 0){//Don't waste resources pushing 
-            message.channel.send("You weren't a signatory to begin with.");
+            await message.channel.send("You weren't a signatory to begin with.");
             return;
         }
         //Delete signatories
@@ -50,7 +50,7 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Treaty un-signed successfully.");
+        await message.channel.send("Treaty un-signed successfully.");
         
     }
 }

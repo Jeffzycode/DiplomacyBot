@@ -48,7 +48,7 @@ module.exports = {
             console.log(__roles);
             assert(__name.length > 0 && __roles.length > 0);//Channel must have at least one role and name
         } catch (error) {
-            message.channel.send("Invalid command format. Use ~make-diplo <NAME> @ROLE1 @ROLE2 ...\nVerify that all of the roles are country roles, each separated by a space.");
+            await message.channel.send("Invalid command format. Use " + process.env.PFIX + "make-diplo <NAME> @ROLE1 @ROLE2 ...\nVerify that all of the roles are country roles, each separated by a space.");
             console.log(error);            
             return;
         }
@@ -64,7 +64,7 @@ module.exports = {
             let lstCountryRoles = data.Item.countryRoles;
             for(i = 0; i < __roles.length; i++){
                 if(! lstCountryRoles.hasOwnProperty(__roles[i].substring(3, __roles[i].length-1))) {
-                    message.channel.send("Error: cannot assign a non-country role to a diplo channel.");
+                    await message.channel.send("Error: cannot assign a non-country role to a diplo channel.");
                     countryRolesValid = false;
                     return;   
                 }
@@ -105,7 +105,7 @@ module.exports = {
             });
         } catch (error){
             console.log(error);
-            message.channel.send("Failed to create channel. Please contact a developer.");
+            await message.channel.send("Failed to create channel. Please contact a developer.");
             return;
         }
         //Update databases
@@ -140,7 +140,7 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Channel successfully created.");
+        await message.channel.send("Channel successfully created.");
         //TODO: Add channel to role profiles
     }
 }

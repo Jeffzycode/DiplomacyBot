@@ -95,7 +95,7 @@ async function sendTreaty(treatyObj, serverID, message, treatyID){
         await CE.databaseFetchError(error, message.channel);
     }
     if(serverProfile.Item.treatyChannel === "NULL") {//No point in outputting, there is no designated output channel
-        message.channel.send("There is currently no treaty output channel. Set one using ~set-treaty-channel.");
+        await message.channel.send("There is currently no treaty output channel. Set one using " + process.env.PFIX + "set-treaty-channel.");
         return;
     }
     let treatyOutputChannel = await message.guild.channels.fetch(serverProfile.Item.treatyChannel);
@@ -158,16 +158,16 @@ module.exports = {
             return;
         }
         if(channelProfile.Item === undefined) {//Not a diplo channel
-            message.channel.send("You cannot post a treaty from a non-diplo channel.");
+            await message.channel.send("You cannot post a treaty from a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is no treaty in the channel
-            message.channel.send("You cannot post a non-existent treaty. To make a new treaty, use ~make-treaty.");
+            await message.channel.send("You cannot post a non-existent treaty. To make a new treaty, use " + process.env.PFIX + "make-treaty.");
             return;
         }
         //Check that we can post the treaty without going above the max number of treaties per server
         if(! await checkNumTreaties(channelProfile.Item.server)) {
-            message.channel.send("Each server can have a maximum of " + process.env.MAX_TOTAL_TREATIES + " treaties. Void defunct treaties using ~void-treaty to free up space.");
+            await message.channel.send("Each server can have a maximum of " + process.env.MAX_TOTAL_TREATIES + " treaties. Void defunct treaties using " + process.env.PFIX + "void-treaty to free up space.");
             return;
         }
         console.log(process.env.MAX_TOTAL_TREATIES);
@@ -176,19 +176,19 @@ module.exports = {
         //Step 2. Check that the treaty has everything needed
         let postedTreaty = channelProfile.Item.curTreaty;
         if(postedTreaty.title.length === 0){//No title
-            message.channel.send("The treaty has no title. Use ~set-title to set a title.");
+            await message.channel.send("The treaty has no title. Use " + process.env.PFIX + "set-title to set a title.");
             return;
         }
         if(postedTreaty.date.length === 0){//No date
-            message.channel.send("The treaty has no date. Use ~set-date YYYY-MM-DD to set a date.");
+            await message.channel.send("The treaty has no date. Use " + process.env.PFIX + "set-date YYYY-MM-DD to set a date.");
             return;
         }
         if(postedTreaty.clauses.length === 0) {//No clauses
-            message.channel.send("The treaty has no clauses. Use ~add-clause to add a clause.");
+            await message.channel.send("The treaty has no clauses. Use " + process.env.PFIX + "add-clause to add a clause.");
             return;
         }
         if(Object.keys(postedTreaty.signatories).length === 0){//No signatories
-            message.channel.send("The treaty has no signatories. Use ~sign-treaty to sign the treaty, or ~add-signatory to force-add a signatory.");
+            await message.channel.send("The treaty has no signatories. Use " + process.env.PFIX + "sign-treaty to sign the treaty, or " + process.env.PFIX + "add-signatory to force-add a signatory.");
             return;
         }
         //Step 3. Send the treaty
@@ -203,6 +203,6 @@ module.exports = {
             await CE.databasePushError(error, message.channel);
         }
         console.log("Treaty posted successfully");
-        message.channel.send("Treaty posted successfully.");
+        await message.channel.send("Treaty posted successfully.");
     }
 }

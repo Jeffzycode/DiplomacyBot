@@ -26,7 +26,7 @@ module.exports = {
             roleID = args[0].substring(3, args[0].length-1);
             assert((await message.guild.roles.fetch(roleID)) !== null);//Check that the argument is indeed a role
         } catch (error) {
-            message.channel.send("Invalid command. Use ~remove-signatory @ROLE");
+            await message.channel.send("Invalid command. Use " + process.env.PFIX + "remove-signatory @ROLE");
             return;
         }
         try {//Fetch channel profile
@@ -36,15 +36,15 @@ module.exports = {
             return;
         }
         if(channelProfile.Item === undefined) {//Not a diplo channel
-            message.channel.send("You cannot remove a signatory in a non-diplo channel.");
+            await message.channel.send("You cannot remove a signatory in a non-diplo channel.");
             return;
         }
         if(Object.keys(channelProfile.Item.curTreaty).length === 0) {//There is no treaty in the channel
-            message.channel.send("You cannot remove a signatory from a non-existent treaty. To make a new treaty, use ~make-treaty.");
+            await message.channel.send("You cannot remove a signatory from a non-existent treaty. To make a new treaty, use " + process.env.PFIX + "make-treaty.");
             return;
         }
         if(! channelProfile.Item.curTreaty.signatories.hasOwnProperty(roleID)) {//Attempt to remove a non-signatory
-            message.channel.send("The role provided was never a signatory.");
+            await message.channel.send("The role provided was never a signatory.");
             return;
         }
         //Delete signatory
@@ -54,7 +54,7 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        message.channel.send("Signatory removed successfully");
+        await message.channel.send("Signatory removed successfully");
         
     }
 }
