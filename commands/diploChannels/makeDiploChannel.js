@@ -44,12 +44,9 @@ module.exports = {
                 if(i > 0) __name += " ";
                 __name += args[i];
             }
-            console.log(__name);
-            console.log(__roles);
             assert(__name.length > 0 && __roles.length > 0);//Channel must have at least one role and name
         } catch (error) {
             await message.channel.send("Invalid command format. Use " + process.env.PFIX + "make-diplo <NAME> @ROLE1 @ROLE2 ...\nVerify that all of the roles are country roles, each separated by a space.");
-            console.log(error);            
             return;
         }
         //Check name length
@@ -91,8 +88,6 @@ module.exports = {
             if(channelParent.length > 0) channelParams['parent'] = channelParent;//Set parent category if it exists
             let __roleList = [];//Make an array of promises to fetch the roles
             for(i = 0; i < __roles.length; i++) __roleList.push(await message.guild.roles.fetch(__roles[i].substring(3, __roles[i].length-1)));
-
-            console.log(__roleList.length);
             __roleList.forEach(role =>{
                 channelParams.permissionOverwrites.push({
                     id: role,

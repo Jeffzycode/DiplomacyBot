@@ -24,7 +24,6 @@ module.exports = {
             assert((await message.guild.channels.fetch(args[0].substring(2, args[0].length-1))).type === 0);//Must be a text channel
         } catch (error) {
             await message.channel.send("Invalid format. Use " + process.env.PFIX + "set-treaty-channel #CHANNELNAME");
-            console.log(error);
             return;
         }
         let newTreatyChannel = args[0].substring(2, args[0].length-1);
@@ -35,7 +34,6 @@ module.exports = {
             } catch (error) {
                 await CE.databasePushError(error, message.channel);
             }
-            console.log("Successfully changed treaty channel of server " + guildChannel.guild.name);
             message.guild.channels.fetch(newTreatyChannel).then(channel => channel.send("Verify that this is the correct treaty channel."));
         } catch (error) {
             console.log("Error when changing the treaty channel, " + error);

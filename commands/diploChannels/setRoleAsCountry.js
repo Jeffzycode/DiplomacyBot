@@ -18,7 +18,6 @@ module.exports = {
         //Check perms
         if(! (await permVerifier.checkPermissions(message.author, this.requiredPerms, false, message))) return;
         let rolesToSet = [];
-        console.log(args[0]);
         try {//Input format validator
             assert(args.length > 0);
             for(i = 0; i < args.length; i++){

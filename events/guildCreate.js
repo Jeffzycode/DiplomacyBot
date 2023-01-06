@@ -31,7 +31,6 @@ module.exports = {
         params.Item["treatyChannel"] = "NULL";
         if(txtChannels.size !== 0) newLogChannel = txtChannels.at(0).id;//Switch treaty output channel to the topmost log channel it has access to
 
-        console.log(params);//Debug log
         try {
             await docClient.put(params).promise();
         } catch (error) {

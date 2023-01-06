@@ -170,7 +170,6 @@ module.exports = {
             await message.channel.send("Each server can have a maximum of " + process.env.MAX_TOTAL_TREATIES + " treaties. Void defunct treaties using " + process.env.PFIX + "void-treaty to free up space.");
             return;
         }
-        console.log(process.env.MAX_TOTAL_TREATIES);
         //Step 1. Refresh signatories
         await refreshSignatories(channelProfile);
         //Step 2. Check that the treaty has everything needed
@@ -193,7 +192,6 @@ module.exports = {
         }
         //Step 3. Send the treaty
         let treatyID = await logTreaty(message.guild.id, channelProfile.Item.curTreaty, message.guild.roles);
-        console.log("Treaty logged");
         await sendTreaty(channelProfile.Item.curTreaty, message.guild.id, message, treatyID);
         //Remove the treaty from the channel
         channelProfile.Item.curTreaty = {};
@@ -202,7 +200,6 @@ module.exports = {
         } catch (error) {
             await CE.databasePushError(error, message.channel);
         }
-        console.log("Treaty posted successfully");
         await message.channel.send("Treaty posted successfully.");
     }
 }

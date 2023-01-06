@@ -20,7 +20,6 @@ module.exports = {
             }
         } catch (error) {
             await message.channel.send("Invalid command format. Use " + process.env.PFIX + "delete-channels #CHANNEL1 #CHANNEL2 ...");
-            console.log(error);            
             return;
         }
         //Delete channels

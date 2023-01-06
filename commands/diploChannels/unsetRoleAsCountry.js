@@ -57,7 +57,6 @@ module.exports = {
                 delete curCountryRoles[roleID];//Erase from server profile
                 let data = await docClient.get({TableName: 'countryRoles', Key: {id: roleID}}).promise();//Pull role's information from countryRoles DB
                 for(diploChannelID in data.Item.diploChannels) {//Erase from associated diploChannels
-                    console.log(diploChannelID);
                     let __data = await docClient.get({TableName: 'diploChannels', Key: {id: diploChannelID}}).promise();
                     let assocMembers = __data.Item.members;
                     delete assocMembers[roleID];//Erase from associated diplo Channel
