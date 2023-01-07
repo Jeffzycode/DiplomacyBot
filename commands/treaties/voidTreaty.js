@@ -36,7 +36,7 @@ module.exports = {
         if(! (await permVerifier.checkPermissions(message.author, this.requiredPerms, false, message))) return;
         //Step 1. Validate input and provided ID
         if(args.length !== 1){//Must accept one argument
-            message.channel.send("Invalid command. Use " + process.env.PFIX + "void-treaty <ID>");
+            await message.channel.send("Invalid command. Use " + process.env.PFIX + "void-treaty <ID>");
             return;
         }
         //Step 2. Fetch Treaty
@@ -47,7 +47,7 @@ module.exports = {
             await CE.databaseFetchError(error, message.channel);
         }
         if(treatyProfile.Item === undefined) {//Invalid ID provided
-            message.channel.send("Treaty not found.");
+            await message.channel.send("Treaty not found.");
             return;
         }
         //Step 3. Disconnect Treaty from CountryRoles
@@ -77,6 +77,6 @@ module.exports = {
             await (await message.guild.channels.fetch(serverProfile.Item.treatyChannel)).send("Voided **" + treatyProfile.Item.title + "** (ID: " + treatyProfile.Item.id + ")");
         }
         //Step 7. Send confirmation message to user
-        message.channel.send("Treaty voided successfully");
+        await message.channel.send("Treaty voided successfully");
     }
 }
