@@ -1,5 +1,5 @@
 # DiplomacyBot
-A Discord Bot for MUN-style diplomatic interactions.
+A Discord Bot for MUN-style diplomatic interactions. **Not affiliated with the popular board game "Diplomacy".**
 
 For a list of commands, go [here](https://github.com/Jeffzycode/DiplomacyBot/wiki/Commands).
 
